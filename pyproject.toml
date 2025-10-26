@@ -22,20 +22,17 @@ requires-python = ">=3.12"
 version = "0.0.1"
 
 dependencies = [ # fmt: off
-  "loguru", # Better than print() - practice production logging with levels
-  "matplotlib", # Industry standard plotting
-  "pandas", # THE data manipulation tool in analytics
-  "seaborn", # Statistical charts built on matplotlib
-  "ipython", # Enhanced Python shell (needed for notebooks)
-  "ipykernel", # Jupyter kernel for notebooks
-  "pre-commit>=4.3.0",
+  "loguru",
+  "pandas",
+  "matplotlib",
+  "ipykernel",
 ]  # fmt: on
 
 [project.urls]
-"Bug Tracker" = "https://github.com/denisecase/pro-analytics-02-starter/issues"
-Documentation = "https://denisecase.github.io/pro-analytics-02-starter/"
-Homepage = "https://github.com/denisecase/pro-analytics-02-starter"
-Repository = "https://github.com/denisecase/pro-analytics-02-starter"
+"Bug Tracker" = "https://github.com/garythedog/smart-store-wilkersonderek/issues"
+Documentation = "https://garythedog.github.io/smart-store-wilkersonderek/"
+Homepage = "https://github.com/garythedog/smart-store-wilkersonderek"
+Repository = "https://github.com/garythedog/smart-store-wilkersonderek"
 
 [project.optional-dependencies]
 dev = [
