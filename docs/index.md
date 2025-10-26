@@ -1,7 +1,6 @@
 # Analytics Project Documentation
 
-Welcome! This site provides automatically generated reference documenation for your project.
+Welcome to the Smart Store Analytics project by Derek Wilkerson.
+This project demonstrates business intelligence and analytics concepts using Python and MkDocs.
 
-Document your code as you work.
-
-Those comments will appear here and provide useful, professional documentation for your analytics project.
+View the repository on [GitHub](https://github.com/garythedog/smart-store-wilkersonderek).

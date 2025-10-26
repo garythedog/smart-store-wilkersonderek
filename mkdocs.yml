@@ -6,11 +6,11 @@
 # TODO: Update site_description
 # TODO: Update site_author
 
-site_name: Professional Analytics Project
-site_url: https://denisecase.github.io/pro-analytics-02-starter/
-repo_url: https://github.com/denisecase/pro-analytics-02-starter
+site_name: Smart Store Analytics - Derek Wilkerson
+repo_url: https://github.com/garythedog/smart-store-wilkersonderek
+site_url: https://garythedog.github.io/smart-store-wilkersonderek/
 site_description: Professional Python project demonstrating industry best practices
-site_author: Denise Case
+site_author: Derek Wilkerson
 docs_dir: docs
 site_dir: site
 
