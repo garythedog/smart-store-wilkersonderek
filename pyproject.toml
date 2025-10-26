@@ -9,12 +9,12 @@ build-backend = "setuptools.build_meta"
 requires = ["setuptools>=80", "wheel"]
 
 [project]
-authors = [{name = "Denise Case"}] # TODO: Change to YOUR name (ownership matters)
+authors = [{name = "Derek Wilkerson"}] # TODO: Change to YOUR name (ownership matters)
 classifiers = [
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.12",
 ]
-description = "Professional Python starter project using uv and a src layout"
+description = "Smart Store analytics project by Derek Wilkerson for BI & Analytics"
 license = "MIT"
 name = "analytics-project" # PACKAGE name (matches src folder except with dashes)
 readme = "README.md"
@@ -39,8 +39,9 @@ Repository = "https://github.com/denisecase/pro-analytics-02-starter"
 
 [project.optional-dependencies]
 dev = [
-  "pytest", # run some tests automatically
-  "pytest-cov", # coverage report for more visibility
+  "pytest",
+  "pytest-cov",
+  "pre-commit",
 ]
 docs = [
   "mkdocs",                # Core MkDocs
