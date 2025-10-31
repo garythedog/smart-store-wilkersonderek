@@ -49,7 +49,12 @@ def read_csv_to_df(path: Path | str, **kwargs) -> pd.DataFrame:
 
 
 def main() -> None:
-    """Smoke test: Read every CSV in data/raw and print their shapes."""
+    """
+    Smoke test:
+    - Read every CSV in data/raw
+    - Create a DataFrame for each
+    - Log and print their shapes and a quick preview
+    """
     logger.info("Starting data prep smoke test")
 
     if not RAW_DIR.exists():
@@ -61,16 +66,22 @@ def main() -> None:
         logger.warning("No CSV files found in %s", RAW_DIR)
         return
 
+    shapes = {}
     for csv_file in csv_files:
         logger.info("Processing: %s", csv_file.name)
         df = read_csv_to_df(csv_file)
+        shapes[csv_file.name] = df.shape
+
+        # human-readable preview
         print(f"\n=== {csv_file.name} ===")
         print(f"Shape: {df.shape}")
         print(df.head(3))
         logger.info("✅ %s loaded: %s rows × %s cols", csv_file.name, *df.shape)
 
-    logger.info("Smoke test complete.")
+    # summary line for your notes / README
+    print("\n=== SUMMARY (file → (rows, cols)) ===")
+    for fname, shp in shapes.items():
+        print(f"{fname} → {shp}")
+        logger.info("SUMMARY: %s → %s", fname, shp)
 
-
-if __name__ == "__main__":
-    main()
+    logger.info("Smoke test complete for %s file(s).", len(shapes))
