@@ -109,3 +109,43 @@ max                     4.80
 mean                    3.86
 stdev                   0.60
 
+2025-11-04 18:41:37,782 | INFO | __main__ | === Starting customers data preparation ===
+2025-11-04 18:41:37,782 | INFO | __main__ | Loading customers data from C:\Repos\smart-store-wilkersonderek\data\raw\customers_data.csv
+2025-11-04 18:41:37,789 | INFO | __main__ | Raw customers shape: (201, 6)
+2025-11-04 18:41:37,789 | INFO | __main__ | Dropped 0 duplicate rows
+2025-11-04 18:41:37,789 | INFO | __main__ | Dropped 0 rows with missing key fields (['CustomerID', 'Name'])
+2025-11-04 18:41:37,796 | INFO | __main__ | Removing outliers from numeric columns: ['CustomerID', 'LoyaltyPoints_Num']
+2025-11-04 18:41:37,799 | INFO | __main__ | Removed 0 rows as numeric outliers
+2025-11-04 18:41:37,799 | INFO | __main__ | Final customers shape after cleaning: (201, 6)
+2025-11-04 18:41:37,810 | INFO | __main__ | Saved cleaned customers data to C:\Repos\smart-store-wilkersonderek\data\processed\customers_data_clean.csv
+2025-11-04 18:41:37,811 | INFO | __main__ | === Finished customers data preparation ===
+2025-11-05 07:01:38,938 | INFO | __main__ | === Starting products data preparation ===
+2025-11-05 07:01:38,940 | INFO | __main__ | Loading products data from C:\Repos\smart-store-wilkersonderek\data\raw\products_data.csv
+2025-11-05 07:01:38,949 | INFO | __main__ | Raw products shape: (100, 6)
+2025-11-05 07:01:38,951 | INFO | __main__ | Dropped 0 duplicate product rows
+2025-11-05 07:01:38,953 | INFO | __main__ | Dropped 0 rows with missing key product fields (['ProductID', 'ProductName'])
+2025-11-05 07:01:38,954 | INFO | __main__ | Removing outliers from numeric columns: ['UnitPrice', 'CurrentDiscount_Pct']
+2025-11-05 07:01:38,957 | INFO | __main__ | Removed 0 rows as numeric outliers
+2025-11-05 07:01:38,957 | INFO | __main__ | Final products shape after cleaning: (100, 6)
+2025-11-05 07:01:38,962 | INFO | __main__ | Saved cleaned products data to C:\Repos\smart-store-wilkersonderek\data\processed\products_data_clean.csv
+2025-11-05 07:01:38,962 | INFO | __main__ | === Finished products data preparation ===
+2025-11-05 07:06:13,848 | INFO | __main__ | === Starting products data preparation ===
+2025-11-05 07:06:13,848 | INFO | __main__ | Loading products data from C:\Repos\smart-store-wilkersonderek\data\raw\products_data.csv
+2025-11-05 07:06:13,857 | INFO | __main__ | Raw products shape: (100, 6)
+2025-11-05 07:06:13,857 | INFO | __main__ | Dropped 0 duplicate product rows
+2025-11-05 07:06:13,860 | INFO | __main__ | Dropped 0 rows with missing key product fields (['ProductID', 'ProductName'])
+2025-11-05 07:06:13,862 | INFO | __main__ | Removing outliers from numeric columns: ['UnitPrice', 'CurrentDiscount_Pct']
+2025-11-05 07:06:13,867 | INFO | __main__ | Removed 0 rows as numeric outliers
+2025-11-05 07:06:13,868 | INFO | __main__ | Final products shape after cleaning: (100, 6)
+2025-11-05 07:06:13,872 | INFO | __main__ | Saved cleaned products data to C:\Repos\smart-store-wilkersonderek\data\processed\products_data_clean.csv
+2025-11-05 07:06:13,872 | INFO | __main__ | === Finished products data preparation ===
+2025-11-05 07:06:57,648 | INFO | __main__ | === Starting sales data preparation ===
+2025-11-05 07:06:57,648 | INFO | __main__ | Loading sales data from C:\Repos\smart-store-wilkersonderek\data\raw\sales_data.csv
+2025-11-05 07:06:57,666 | INFO | __main__ | Raw sales shape: (2001, 9)
+2025-11-05 07:06:57,667 | INFO | __main__ | Dropped 0 duplicate sales rows
+2025-11-05 07:06:57,668 | INFO | __main__ | Dropped 0 rows with missing key sales fields (['CustomerID', 'ProductID'])
+2025-11-05 07:06:57,669 | INFO | __main__ | Removing outliers from numeric columns: ['BonusPoints_Num']
+2025-11-05 07:06:57,671 | INFO | __main__ | Removed 0 rows as numeric outliers
+2025-11-05 07:06:57,671 | INFO | __main__ | Final sales shape after cleaning: (2001, 9)
+2025-11-05 07:06:57,676 | INFO | __main__ | Saved cleaned sales data to C:\Repos\smart-store-wilkersonderek\data\processed\sales_data_clean.csv
+2025-11-05 07:06:57,676 | INFO | __main__ | === Finished sales data preparation ===
