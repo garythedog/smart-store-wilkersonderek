@@ -1,87 +1,66 @@
-"""
-data_prep.py
--------------
-Reusable utilities for reading raw CSV files into pandas DataFrames.
-This is the first step of our BI pipeline.
-
-Run from the project root:
-    uv run python -m analytics_project.data_prep
-"""
-
 from pathlib import Path
-import logging
-import pandas as pd
 
-# Try to use shared logger if available; fallback to basic logging
-try:
-    from .utils_logger import get_logger
+from analytics_project.data_scrubber import DataScrubber
 
-    logger = get_logger(__name__)
-except Exception:
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+
+# Project paths
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+RAW_DIR = PROJECT_ROOT / "data" / "raw"
+PROCESSED_DIR = PROJECT_ROOT / "data" / "processed"
+
+
+def prep_customers() -> None:
+    raw_path = RAW_DIR / "customers_data.csv"
+    out_path = PROCESSED_DIR / "customers_data_clean.csv"
+
+    scrubber = (
+        DataScrubber.from_csv(raw_path)
+        .standardize_column_names()
+        .strip_whitespace()
+        .drop_empty_rows()
+        .drop_duplicates()
     )
-    logger = logging.getLogger(__name__)
-    logger.warning("utils_logger not found; using basic logger.")
 
-# ---------- Project Paths ----------
-PROJECT_DIR = Path(__file__).resolve().parents[2]
-DATA_DIR = PROJECT_DIR / "data"
-RAW_DIR = DATA_DIR / "raw"
-PROCESSED_DIR = DATA_DIR / "processed"
+    scrubber.to_csv(out_path, index=False)
 
 
-def read_csv_to_df(path: Path | str, **kwargs) -> pd.DataFrame:
-    """Read a CSV file into a pandas DataFrame with logging."""
-    p = Path(path)
-    if not p.exists():
-        logger.error("File not found: %s", p)
-        raise FileNotFoundError(p)
+def prep_products() -> None:
+    raw_path = RAW_DIR / "products_data.csv"
+    out_path = PROCESSED_DIR / "products_data_clean.csv"
 
-    kwargs.setdefault("encoding", "utf-8")
-    kwargs.setdefault("low_memory", False)
+    scrubber = (
+        DataScrubber.from_csv(raw_path)
+        .standardize_column_names()
+        .strip_whitespace()
+        .drop_empty_rows()
+        .drop_duplicates()
+    )
 
-    logger.info("Reading CSV: %s", p)
-    df = pd.read_csv(p, **kwargs)
-    logger.info("Loaded %s -> rows=%s, cols=%s", p.name, df.shape[0], df.shape[1])
-    return df
+    scrubber.to_csv(out_path, index=False)
+
+
+def prep_sales() -> None:
+    raw_path = RAW_DIR / "sales_data.csv"
+    out_path = PROCESSED_DIR / "sales_data_clean.csv"
+
+    scrubber = (
+        DataScrubber.from_csv(raw_path)
+        .standardize_column_names()
+        .strip_whitespace()
+        .drop_empty_rows()
+        .drop_duplicates()
+    )
+
+    scrubber.to_csv(out_path, index=False)
 
 
 def main() -> None:
-    """
-    Smoke test:
-    - Read every CSV in data/raw
-    - Create a DataFrame for each
-    - Log and print their shapes and a quick preview
-    """
-    logger.info("Starting data prep smoke test")
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    prep_customers()
+    prep_products()
+    prep_sales()
+    print("Data prep complete. Clean files written to:", PROCESSED_DIR)
 
-    if not RAW_DIR.exists():
-        logger.error("RAW_DIR does not exist: %s", RAW_DIR)
-        return
 
-    csv_files = sorted(RAW_DIR.glob("*.csv"))
-    if not csv_files:
-        logger.warning("No CSV files found in %s", RAW_DIR)
-        return
-
-    shapes = {}
-    for csv_file in csv_files:
-        logger.info("Processing: %s", csv_file.name)
-        df = read_csv_to_df(csv_file)
-        shapes[csv_file.name] = df.shape
-
-        # human-readable preview
-        print(f"\n=== {csv_file.name} ===")
-        print(f"Shape: {df.shape}")
-        print(df.head(3))
-        logger.info("✅ %s loaded: %s rows × %s cols", csv_file.name, *df.shape)
-
-    # summary line for your notes / README
-    print("\n=== SUMMARY (file → (rows, cols)) ===")
-    for fname, shp in shapes.items():
-        print(f"{fname} → {shp}")
-        logger.info("SUMMARY: %s → %s", fname, shp)
-
-    logger.info("Smoke test complete for %s file(s).", len(shapes))
+if __name__ == "__main__":
+    main()
