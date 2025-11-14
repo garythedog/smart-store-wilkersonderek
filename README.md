@@ -238,94 +238,38 @@ git push
 
 ---
 
-## P4 – Data Warehouse Design and ETL (Star Schema)
+---
 
-In P4, I created a small data warehouse in SQLite to support business intelligence queries on the Smart Store dataset.
+## 🏛️ P4: Data Warehouse Design and ETL to DW
 
-### Data Warehouse Location
+### Overview
 
-- Database file: `data/dw/smart_sales.db`
-- Created and loaded by: `src/analytics_project/etl_to_dw.py`
+P4 extends the Smart Store BI pipeline by creating and populating a small **data warehouse (DW)** in SQLite.
+The goal is to move from cleaned CSV files to a **dimensional model (star schema)** that supports fast, flexible business intelligence queries.
 
-### Star Schema
+In this phase, I:
 
-The data warehouse uses a **star schema** with one fact table and two dimension tables.
+- Designed a star schema with one fact table and two dimension tables.
+- Created the schema in a local SQLite database.
+- Wrote a Python ETL script to load the warehouse from the processed CSV files.
+- Verified that all three tables were populated correctly.
 
-- **Fact table – `fact_sales`**
-  - `TransactionID` (PK)
-  - `SaleDate` (TEXT, `YYYY-MM-DD`)
-  - `CustomerID` (FK → `dim_customer.CustomerID`)
-  - `ProductID` (FK → `dim_product.ProductID`)
-  - `StoreID`
-  - `CampaignID`
-  - `SaleAmount`
-  - `BonusPoints_Num`
-  - `PaymentType_Cat`
+---
 
-- **Dimension table – `dim_customer`**
-  - `CustomerID` (PK)
-  - `Name`
-  - `Region`
-  - `JoinDate` (TEXT, `YYYY-MM-DD`)
-  - `LoyaltyPoints_Num`
-  - `PreferredContactMethod_Cat`
+### Data Warehouse Files
 
-- **Dimension table – `dim_product`**
-  - `ProductID` (PK)
-  - `ProductName`
-  - `Category`
-  - `UnitPrice`
-  - `CurrentDiscount_Pct`
-  - `Supplier_Cat`
+- **SQLite database:** `data/dw/smart_sales.db`
+- **ETL script:** `src/analytics_project/etl_to_dw.py`
+- **Source (cleaned) data:**
+  - `data/processed/customers_data_clean.csv`
+  - `data/processed/products_data_clean.csv`
+  - `data/processed/sales_data_clean.csv`
 
-Overall structure:
+---
 
-`dim_customer  ←  fact_sales  →  dim_product`
+### Star Schema Design
 
-### Source Data
+The data warehouse uses a **star schema**:
 
-The warehouse is loaded from the cleaned files in `data/processed`:
-
-- `customers_data_clean.csv`
-- `products_data_clean.csv`
-- `sales_data_clean.csv`
-
-Column names in the CSVs are normalized (lowercase) and then renamed to match the DW schema (CamelCase). Duplicate keys (CustomerID, ProductID, TransactionID) are dropped so that each dimension/fact key is unique. Invalid or unparseable dates in the sales data are coerced to `NaT` and those rows are excluded from the fact table.
-
-### ETL Script – `etl_to_dw.py`
-
-The ETL script performs the following steps:
-
-1. **Create schema**
-   - Connects to `data/dw/smart_sales.db`.
-   - Creates `dim_customer`, `dim_product`, and `fact_sales` tables if they do not exist.
-   - Adds helpful indexes on `CustomerID`, `ProductID`, and `StoreID` in `fact_sales`.
-
-2. **Clear existing data**
-   - Deletes all rows from the fact and dimension tables so the DW can be fully reloaded.
-
-3. **Load dimensions**
-   - Reads `customers_data_clean.csv` and `products_data_clean.csv`.
-   - Normalizes column names, renames them to the DW naming convention, and drops duplicate keys.
-   - Converts `JoinDate` to `YYYY-MM-DD`.
-   - Inserts the cleaned data into `dim_customer` and `dim_product`.
-
-4. **Load fact table**
-   - Reads `sales_data_clean.csv`.
-   - Normalizes and renames columns to match `fact_sales`.
-   - Drops duplicate `TransactionID` values.
-   - Parses `SaleDate` to a datetime, coerces invalid dates to `NaT`, drops rows with invalid dates, and formats the rest as `YYYY-MM-DD`.
-   - Inserts the cleaned sales records into `fact_sales`.
-
-### How to Run the ETL
-
-From the project root:
-
-```bash
-# Activate virtual environment (PowerShell)
-.venv\Scripts\Activate.ps1
-
-# Run ETL to build and load the DW
-python src/analytics_project/etl_to_dw.py
-
-```
+```text
+dim_customer   ←   fact_sales   →   dim_product
