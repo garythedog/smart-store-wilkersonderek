@@ -226,7 +226,7 @@ sales_data_clean.csv
 
 ---
 
-## ✅ Commit & Push Commands
+### ✅ Commit & Push Commands
 
 After saving your README:
 
@@ -235,10 +235,7 @@ git add README.md
 git commit -m "Restore full README.md with P1–P3 workflow and ETL details"
 git push
 
-
----
-
----
+```
 
 ## 🏛️ P4: Data Warehouse Design and ETL to DW
 
