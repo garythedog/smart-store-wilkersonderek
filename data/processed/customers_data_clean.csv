@@ -1,4 +1,4 @@
-CustomerID,Name,Region,JoinDate,LoyaltyPoints_Num,PreferredContactMethod_Cat
+customerid,name,region,joindate,loyaltypoints_num,preferredcontactmethod_cat
 1000,Robert Gomez,West,2/25/2024,25,Phone
 1001,John Silva,East,12/1/2020,125,Phone
 1002,Mark Marshall,Central,8/8/2020,225,Phone

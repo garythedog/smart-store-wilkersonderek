@@ -1,4 +1,4 @@
-TransactionID,SaleDate,CustomerID,ProductID,StoreID,CampaignID,SaleAmount,BonusPoints_Num,PaymentType_Cat
+transactionid,saledate,customerid,productid,storeid,campaignid,saleamount,bonuspoints_num,paymenttype_cat
 1,5/4/2025,1034,2059,402,0.0,2048.2,150,Online
 2,5/4/2025,1066,2048,403,1.0,321.87,30,Debit
 3,5/4/2025,1116,2041,403,3.0,3216.84,20,Online

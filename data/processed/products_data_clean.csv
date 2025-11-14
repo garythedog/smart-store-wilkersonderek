@@ -1,4 +1,4 @@
-ProductID,ProductName,Category,UnitPrice,CurrentDiscount_Pct,Supplier_Cat
+productid,productname,category,unitprice,currentdiscount_pct,supplier_cat
 2000,Electronics-Be,Electronics,969.31,5,MetroTech
 2001,Electronics-Be,Clothing,412.35,20,ClubSupplyCo
 2002,Office-Family,Clothing,866.0,20,ClubSupplyCo
