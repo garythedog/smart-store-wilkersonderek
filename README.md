@@ -270,3 +270,52 @@ The data warehouse uses a **star schema**:
 
 ```text
 dim_customer   ←   fact_sales   →   dim_product
+
+## P5 – Cross-Platform Reporting with Power BI & Spark
+
+### Overview
+This project connects the data warehouse created in P4 to Power BI using an ODBC DSN, performs OLAP operations (slice, dice, drilldown), executes SQL queries in Power Query, and creates interactive BI visuals.
+
+### Task 1 – Install & Configure Power BI + SQLite ODBC
+**Steps completed:**
+- Installed Power BI Desktop.
+- Installed the SQLite3 ODBC Driver.
+- Created DSN: `SmartSalesDSN`.
+- Linked the DSN to the SQLite data warehouse: `data/dw/smart_sales.db`.
+
+### Task 2 – Load Data Warehouse Tables
+**Steps completed:**
+- Connected via **Home → Get Data → ODBC → SmartSalesDSN**.
+- Loaded the following tables into Power BI:
+  - `dim_customer`
+  - `dim_product`
+  - `fact_sales`
+- Verified the relationships in **Model View**.
+
+### Task 3 – Query & Aggregate Data Using SQL in Power BI
+To generate a list of top-spending customers, I created a custom SQL query directly in Power Query’s Advanced Editor.
+
+**Steps completed:**
+1. Opened **Power Query Editor** (Home → Transform data).
+2. Created a **Blank Query**.
+3. Opened **Advanced Editor**.
+4. Inserted a custom SQL query using the DSN (`SmartSalesDSN`).
+5. Joined the warehouse tables `fact_sales` and `dim_customer`.
+6. Calculated `SUM(SaleAmount)` grouped by customer.
+7. Renamed the query to **Top Customers**.
+8. Clicked **Close & Apply** to load the results back into Power BI.
+
+**M code used:**
+
+```m
+let
+    Source = Odbc.Query("dsn=SmartSalesDSN",
+        "SELECT c.Name AS customer_name,
+                SUM(f.SaleAmount) AS total_spent
+         FROM fact_sales f
+         JOIN dim_customer c
+           ON f.CustomerID = c.CustomerID
+         GROUP BY c.Name
+         ORDER BY total_spent DESC;")
+in
+    Source
