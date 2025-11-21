@@ -322,145 +322,115 @@ in
 
 ---
 
-# 📈 P5 – Cross-Platform Reporting with Power BI & Spark
+# P5. Build & Test Your Extract-Transform-Load (ETL) Pipeline
 
-P5 extends the BI pipeline by connecting the P4 data warehouse to reporting tools and performing OLAP analysis (slice, dice, drilldown). Windows users complete reporting using **Power BI**, while Mac/Linux users complete the same steps using **Spark SQL**. This ensures cross-platform skill development for modern BI environments.
+This module focuses on building a reusable ETL pipeline using Python. You will implement extract, transform, and load steps inside a structured project folder, then run and validate the process. Finally, you will document your work here in your README.
 
----
+## Project Structure
 
-# 🔌 Task 1 – Install & Configure Power BI + SQLite ODBC (Windows)
+smart-store-yourname/
+│
+├── data/
+│   ├── raw/
+│   ├── prepared/
+│   ├── dw/
+│
+├── src/
+│   ├── etl/
+│   │   ├── __init__.py
+│   │   ├── extract.py
+│   │   ├── transform.py
+│   │   ├── load.py
+│   │   └── pipeline.py
+│   │
+│   ├── utils/
+│   │   ├── data_checks.py
+│   │   └── io_helpers.py
+│   │
+│   └── main.py
+│
+├── project.log
+└── README.md
 
-### Completed Steps
+## How to Run the ETL Pipeline
 
-- Installed **Power BI Desktop**
-- Installed SQLite ODBC driver for Windows
-- Created DSN: `SmartSalesDSN`
-- Mapped DSN to:
+To run the full end-to-end ETL processing:
 
----
+```bash
+uv run python src/main.py
 
-# 📈 P5 – Cross-Platform Reporting with Power BI & Spark
-
-P5 extends the BI pipeline by connecting the P4 data warehouse to reporting tools and performing OLAP analysis (slice, dice, drilldown). Windows users complete reporting using Power BI, while Mac/Linux users complete the same steps using Spark SQL. This ensures cross-platform skill development for modern BI environments.
-
----
-
-# 🔌 Task 1 – Install & Configure Power BI + SQLite ODBC (Windows)
-
-Completed Steps:
-
-- Installed Power BI Desktop
-- Installed SQLite ODBC driver for Windows
-- Created DSN: SmartSalesDSN
-- Mapped DSN to the DW file:
-
-\`\`\`
-data/dw/smart_sales.db
-\`\`\`
-
-Power BI now connects directly to the Smart Store data warehouse.
-
----
-
-# 📥 Task 2 – Load Data Warehouse Tables into Power BI
-
-Tables loaded from the DSN connection:
-
-- dim_customer
-- dim_product
-- fact_sales
-
-Relationships were verified in Model View.
 
 ---
 
-# 🧮 Task 3 – SQL Querying in Power Query (Advanced Editor)
+# **📦 CHUNK 4 — Extract Step (what you built)**
 
-Power Query was used to build a custom SQL query titled “Top Customers.”
+```md
+## Extract Step
 
-Steps completed:
+Describe how the extract step works:
 
-1. Open Transform Data
-2. Create Blank Query
-3. Open Advanced Editor
-4. Insert SQL using DSN SmartSalesDSN
-5. Join fact and dimension tables
-6. Group and sort by total spending
-7. Close & Apply
+- Reads all CSV files from `data/raw`
+- Uses pandas to load each into a DataFrame
+- Logs the file names and row counts
+- Uses reusable helper functions to handle missing paths and errors
 
-M Code used:
+## Transform Step
 
-\`\`\`
-let
-    Source = Odbc.Query("dsn=SmartSalesDSN",
-        "SELECT c.Name AS customer_name,
-                SUM(f.SaleAmount) AS total_spent
-         FROM fact_sales f
-         JOIN dim_customer c
-           ON f.CustomerID = c.CustomerID
-         GROUP BY c.Name
-         ORDER BY total_spent DESC;")
-in
-    Source
-\`\`\`
+Transformations performed:
 
----
+- Converted column names to proper format (no spaces, consistent)
+- Parsed dates correctly
+- Removed bad rows (duplicates, invalid data)
+- Standardized numeric columns
+- Added user-defined attributes (numeric + category attributes)
+- Logged row counts before/after cleaning
 
-# 🧊 Task 4 – OLAP: Slice, Dice & Drilldown
+## Load Step
 
-## Slicing (Date Range Filters)
+The load step:
 
-- Extracted Year, Quarter, and Month fields in Power Query
-- Added a date slicer configured with the “Between” option
+- Creates SQLite database: `data/dw/smart_sales.db`
+- Creates or replaces analytical tables
+- Loads prepared data into fact and dimension tables
+- Verifies row counts match expectations
+- Logs database actions to `project.log`
 
-## Dicing (Two Dimensions)
+## Example Log Output
 
-Created a Matrix visual to break down data across two dimensions:
+[INFO] Extracting customers_data.csv (500 rows)
+[INFO] Extracting products_data.csv (300 rows)
+[INFO] Extracting sales_data.csv (1,200 rows)
 
-- Rows: Product Category
-- Columns: Region (or another categorical field)
-- Values: Total Sales
+[INFO] Transform: cleaned customers (498 rows)
+[INFO] Transform: cleaned products (300 rows)
+[INFO] Transform: cleaned sales (1,198 rows)
 
-## Drilldown (Year → Quarter → Month)
+[INFO] Load: inserted into dim_customers (498 rows)
+[INFO] Load: inserted into dim_products (300 rows)
+[INFO] Load: inserted into fact_sales (1,198 rows)
 
-Configured a hierarchy and enabled drilldown on a line or column chart:
+## Reflection
 
-- Year
-- Quarter
-- Month
+- I learned how to structure a real ETL pipeline using modular Python.
+- The project helped me understand how raw data flows through extraction, cleaning, and loading.
+- I improved my debugging skills using logging and pandas.
+- I also strengthened my GitHub workflow by pushing code and tracking changes.
 
-Drill functionality was tested and confirmed.
+## Requirements Checklist
 
----
+- [x] Correct repo structure
+- [x] Extract logic working
+- [x] Transform logic applied
+- [x] Load step creates data warehouse
+- [x] All code documented
+- [x] All files pushed to GitHub
+- [x] Updated README with module documentation
 
-# 📊 Task 5 – Visualizations Created
+## GitHub Repository
 
-Visuals completed:
+(Replace with your actual link)
 
-- Top Customers bar chart
-- Sales Trends line chart (with Year → Quarter → Month drilldown)
-- Product Category slicer
-- Matrix visual for multi-dimensional dicing
+https://https://github.com/garythedog/smart-store-wilkersonderek
 
-All visuals support interactive filtering and drilldown.
 
----
 
-# 🔗 Quick Links for P5
-
-- Power BI Desktop (Windows Store)
-- SQLite ODBC Driver – Christian Werner (x64)
-- DSN Name: SmartSalesDSN
-- Data Warehouse File: data/dw/smart_sales.db
-
----
-
-# 🗂 Git Commands for P5
-
-\`\`\`
-git add README.md
-git commit -m "Add complete P5 reporting workflow with SQL and OLAP"
-git push
-\`\`\`
-
----
