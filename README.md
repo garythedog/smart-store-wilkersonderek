@@ -271,7 +271,6 @@ The data warehouse uses a **star schema**:
 ```text
 dim_customer   ←   fact_sales   →   dim_product
 
-## P5 – Cross-Platform Reporting with Power BI & Spark
 
 ### Overview
 This project connects the data warehouse created in P4 to Power BI using an ODBC DSN, performs OLAP operations (slice, dice, drilldown), executes SQL queries in Power Query, and creates interactive BI visuals.
