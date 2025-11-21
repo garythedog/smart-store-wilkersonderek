@@ -319,3 +319,148 @@ let
          ORDER BY total_spent DESC;")
 in
     Source
+
+---
+
+# 📈 P5 – Cross-Platform Reporting with Power BI & Spark
+
+P5 extends the BI pipeline by connecting the P4 data warehouse to reporting tools and performing OLAP analysis (slice, dice, drilldown). Windows users complete reporting using **Power BI**, while Mac/Linux users complete the same steps using **Spark SQL**. This ensures cross-platform skill development for modern BI environments.
+
+---
+
+# 🔌 Task 1 – Install & Configure Power BI + SQLite ODBC (Windows)
+
+### Completed Steps
+
+- Installed **Power BI Desktop**
+- Installed SQLite ODBC driver for Windows
+- Created DSN: `SmartSalesDSN`
+- Mapped DSN to:
+
+---
+
+# 📈 P5 – Cross-Platform Reporting with Power BI & Spark
+
+P5 extends the BI pipeline by connecting the P4 data warehouse to reporting tools and performing OLAP analysis (slice, dice, drilldown). Windows users complete reporting using Power BI, while Mac/Linux users complete the same steps using Spark SQL. This ensures cross-platform skill development for modern BI environments.
+
+---
+
+# 🔌 Task 1 – Install & Configure Power BI + SQLite ODBC (Windows)
+
+Completed Steps:
+
+- Installed Power BI Desktop
+- Installed SQLite ODBC driver for Windows
+- Created DSN: SmartSalesDSN
+- Mapped DSN to the DW file:
+
+\`\`\`
+data/dw/smart_sales.db
+\`\`\`
+
+Power BI now connects directly to the Smart Store data warehouse.
+
+---
+
+# 📥 Task 2 – Load Data Warehouse Tables into Power BI
+
+Tables loaded from the DSN connection:
+
+- dim_customer
+- dim_product
+- fact_sales
+
+Relationships were verified in Model View.
+
+---
+
+# 🧮 Task 3 – SQL Querying in Power Query (Advanced Editor)
+
+Power Query was used to build a custom SQL query titled “Top Customers.”
+
+Steps completed:
+
+1. Open Transform Data
+2. Create Blank Query
+3. Open Advanced Editor
+4. Insert SQL using DSN SmartSalesDSN
+5. Join fact and dimension tables
+6. Group and sort by total spending
+7. Close & Apply
+
+M Code used:
+
+\`\`\`
+let
+    Source = Odbc.Query("dsn=SmartSalesDSN",
+        "SELECT c.Name AS customer_name,
+                SUM(f.SaleAmount) AS total_spent
+         FROM fact_sales f
+         JOIN dim_customer c
+           ON f.CustomerID = c.CustomerID
+         GROUP BY c.Name
+         ORDER BY total_spent DESC;")
+in
+    Source
+\`\`\`
+
+---
+
+# 🧊 Task 4 – OLAP: Slice, Dice & Drilldown
+
+## Slicing (Date Range Filters)
+
+- Extracted Year, Quarter, and Month fields in Power Query
+- Added a date slicer configured with the “Between” option
+
+## Dicing (Two Dimensions)
+
+Created a Matrix visual to break down data across two dimensions:
+
+- Rows: Product Category
+- Columns: Region (or another categorical field)
+- Values: Total Sales
+
+## Drilldown (Year → Quarter → Month)
+
+Configured a hierarchy and enabled drilldown on a line or column chart:
+
+- Year
+- Quarter
+- Month
+
+Drill functionality was tested and confirmed.
+
+---
+
+# 📊 Task 5 – Visualizations Created
+
+Visuals completed:
+
+- Top Customers bar chart
+- Sales Trends line chart (with Year → Quarter → Month drilldown)
+- Product Category slicer
+- Matrix visual for multi-dimensional dicing
+
+All visuals support interactive filtering and drilldown.
+
+---
+
+# 🔗 Quick Links for P5
+
+- Power BI Desktop (Windows Store)
+- SQLite ODBC Driver – Christian Werner (x64)
+- DSN Name: SmartSalesDSN
+- Data Warehouse File: data/dw/smart_sales.db
+
+---
+
+# 🗂 Git Commands for P5
+
+\`\`\`
+git add README.md
+git commit -m "Add complete P5 reporting workflow with SQL and OLAP"
+git push
+\`\`\`
+
+---
