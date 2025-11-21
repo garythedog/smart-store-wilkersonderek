@@ -322,115 +322,80 @@ in
 
 ---
 
-# P5. Build & Test Your Extract-Transform-Load (ETL) Pipeline
+## P5 - Cross-Platform Reporting with Power BI & Spark
 
-This module focuses on building a reusable ETL pipeline using Python. You will implement extract, transform, and load steps inside a structured project folder, then run and validate the process. Finally, you will document your work here in your README.
+### Overview
+This project connects the data warehouse created in P4 to Power BI using an ODBC DSN, performs OLAP operations, and prepares for future cross-platform reporting with Spark or other tools. The goal is to show that the star schema in `data/dw/smart_sales.db` can support flexible, repeatable analysis outside of SQLite.
 
-## Project Structure
+### Task 1 – Install & Configure Power BI + SQLite ODBC
 
-smart-store-yourname/
-│
-├── data/
-│   ├── raw/
-│   ├── prepared/
-│   ├── dw/
-│
-├── src/
-│   ├── etl/
-│   │   ├── __init__.py
-│   │   ├── extract.py
-│   │   ├── transform.py
-│   │   ├── load.py
-│   │   └── pipeline.py
-│   │
-│   ├── utils/
-│   │   ├── data_checks.py
-│   │   └── io_helpers.py
-│   │
-│   └── main.py
-│
-├── project.log
-└── README.md
+**Steps completed:**
 
-## How to Run the ETL Pipeline
+- Installed Power BI Desktop.
+- Installed the SQLite3 ODBC Driver.
+- Created a DSN named `SmartSalesDSN`.
+- Linked the DSN to the SQLite data warehouse file: `data/dw/smart_sales.db`.
 
-To run the full end-to-end ETL processing:
+### Task 2 – Load Data Warehouse Tables
 
-```bash
-uv run python src/main.py
+**Steps completed:**
 
+- Connected to **Home → Get Data → ODBC → SmartSalesDSN**.
+- Loaded the following tables into Power BI:
+  - `dim_customer`
+  - `dim_product`
+  - `fact_sales`
+- Verified relationships in **Model view**, using:
+  - `dim_customer.CustomerID` → `fact_sales.CustomerID`
+  - `dim_product.ProductID` → `fact_sales.ProductID`.
 
----
+### Task 3 – Create & Use Measures for Analysis
 
-# **📦 CHUNK 4 — Extract Step (what you built)**
+To support OLAP-style analysis, I defined DAX measures for sales and quantity.
 
-```md
-## Extract Step
+**Measures created:**
 
-Describe how the extract step works:
+- **Total Sales Amount**
+  Calculates the total extended sales amount.
 
-- Reads all CSV files from `data/raw`
-- Uses pandas to load each into a DataFrame
-- Logs the file names and row counts
-- Uses reusable helper functions to handle missing paths and errors
+- **Total Quantity Sold**
+  Sums the units sold across all transactions.
 
-## Transform Step
+- **Average Order Value**
+  Divides total sales by the number of distinct orders.
 
-Transformations performed:
+**How I used them:**
 
-- Converted column names to proper format (no spaces, consistent)
-- Parsed dates correctly
-- Removed bad rows (duplicates, invalid data)
-- Standardized numeric columns
-- Added user-defined attributes (numeric + category attributes)
-- Logged row counts before/after cleaning
+- Built a bar chart showing **Total Sales Amount by Product Category**.
+- Built a table showing **Top 10 Customers by Total Sales**.
+- Used slicers for:
+  - Date (by year or month)
+  - Product category
+  - Customer segment (if available).
 
-## Load Step
+### Task 4 – Example Insights from the Report
 
-The load step:
+From the Power BI report, I observed:
 
-- Creates SQLite database: `data/dw/smart_sales.db`
-- Creates or replaces analytical tables
-- Loads prepared data into fact and dimension tables
-- Verifies row counts match expectations
-- Logs database actions to `project.log`
+- Certain product categories contribute a large share of total revenue.
+- A small number of customers drive a significant portion of total sales.
+- Filters make it easy to answer ad hoc questions, such as:
+  - “Which customers bought the most in a specific category?”
+  - “How did sales change between two time periods?”
 
-## Example Log Output
+### Future Cross-Platform Use (Spark, etc.)
 
-[INFO] Extracting customers_data.csv (500 rows)
-[INFO] Extracting products_data.csv (300 rows)
-[INFO] Extracting sales_data.csv (1,200 rows)
+Because the data warehouse is in a standard SQLite database with a star schema, the same data can be used by:
 
-[INFO] Transform: cleaned customers (498 rows)
-[INFO] Transform: cleaned products (300 rows)
-[INFO] Transform: cleaned sales (1,198 rows)
+- Spark DataFrames (via JDBC or by exporting tables).
+- Other BI tools such as Tableau or Excel.
+- Python or R notebooks for advanced analytics.
 
-[INFO] Load: inserted into dim_customers (498 rows)
-[INFO] Load: inserted into dim_products (300 rows)
-[INFO] Load: inserted into fact_sales (1,198 rows)
+The key idea is that **P4 built the warehouse, and P5 demonstrates how that warehouse supports flexible, tool-agnostic reporting**.
 
-## Reflection
+### Reflection
 
-- I learned how to structure a real ETL pipeline using modular Python.
-- The project helped me understand how raw data flows through extraction, cleaning, and loading.
-- I improved my debugging skills using logging and pandas.
-- I also strengthened my GitHub workflow by pushing code and tracking changes.
-
-## Requirements Checklist
-
-- [x] Correct repo structure
-- [x] Extract logic working
-- [x] Transform logic applied
-- [x] Load step creates data warehouse
-- [x] All code documented
-- [x] All files pushed to GitHub
-- [x] Updated README with module documentation
-
-## GitHub Repository
-
-(Replace with your actual link)
-
-https://https://github.com/garythedog/smart-store-wilkersonderek
-
-
-
+- This task helped me connect a real data warehouse to a professional BI tool.
+- I practiced setting up DSNs and verifying relationships across fact and dimension tables.
+- I gained experience defining measures in DAX and using them in multiple visuals.
+- I also saw how a well-designed star schema makes it easy to move between tools (SQLite, Power BI, and potentially Spark) without rebuilding the data from scratch.
