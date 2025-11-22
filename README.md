@@ -228,199 +228,92 @@ sales_data_clean.csv
 
 ### ✅ Commit & Push Commands
 
-After saving your README:
+🏛️ P4: Data Warehouse Design and ETL to the Data Warehouse
 
-```ps
-git add README.md
-git commit -m "Restore full README.md with P1–P3 workflow and ETL details"
-git push
-
-```
-
-🏛️ P4: Data Warehouse Design and ETL to DW
 Overview
+In P4, I expanded the Smart Store BI pipeline by building a small analytical data warehouse in SQLite. The goal was to transition from cleaned CSV files into a dimensional model that supports flexible, fast business-intelligence queries.
 
-P4 extends the Smart Store BI pipeline by creating and populating a small data warehouse (DW) in SQLite.
-The goal is to move from cleaned CSV files to a dimensional model (star schema) that supports fast, flexible business-intelligence queries.
-
-In this phase, I:
-
-Designed a star schema with one fact table and two dimension tables.
-
-Created the schema in a local SQLite database.
-
-Wrote a Python ETL script to load the warehouse from the processed CSV files.
-
-Verified that all three tables were populated correctly.
+This phase focused on designing a simple star schema, creating the SQLite database, and building a Python ETL script that loads the dimension and fact tables from the processed data. After running the pipeline, I verified that the warehouse contained the expected number of rows and was ready for reporting.
 
 Data Warehouse Files
-
-SQLite database: data/dw/smart_sales.db
-
-ETL script: src/analytics_project/etl_to_dw.py
-
-Source (cleaned) data:
-
-data/processed/customers_data_clean.csv
-
-data/processed/products_data_clean.csv
-
-data/processed/sales_data_clean.csv
+• SQLite database: data/dw/smart_sales.db
+• ETL script: src/analytics_project/etl_to_dw.py
+• Cleaned source data:
+– data/processed/customers_data_clean.csv
+– data/processed/products_data_clean.csv
+– data/processed/sales_data_clean.csv
 
 Star Schema Design
-
-The data warehouse uses a star schema with one central fact table and two dimensions:
+The warehouse follows a star schema with a central fact table and two supporting dimensions:
 
 dim_customer ← fact_sales → dim_product
 
-Key ideas:
+Key concepts used:
+• dim_customer contains descriptive details about each customer
+• dim_product contains product attributes
+• fact_sales stores numeric measures (quantity, sale amount) and foreign keys to each dimension
 
-dim_customer contains descriptive attributes about each customer.
+This structure supports OLAP-style questions such as “Which customers are driving sales?” or “What product categories generate the most revenue?”
 
-dim_product contains descriptive attributes about each product.
+ETL Process
+The ETL script performs the full extract–transform–load workflow:
 
-fact_sales stores the numeric measures (such as quantity and sales amount) and foreign keys to each dimension.
+Reads the cleaned CSV files from the processed data folder
 
-This structure supports OLAP-style queries such as “total sales by product category,” “sales by customer segment,” and other slice-and-dice analysis.
+Creates the SQLite database if it does not already exist
 
-ETL to the Data Warehouse
+Builds the dimension and fact tables
 
-The ETL script performs the following steps:
+Loads customers, products, and sales transactions into their respective tables
 
-Reads the cleaned CSV files from data/processed.
+Logs row counts to confirm successful loading
 
-Creates the SQLite database file (if it does not exist).
+After running the ETL, I confirmed that each dimension table and the fact table contained the expected number of rows. This completed the transition from flat files to a structured analytical warehouse.
 
-Creates the dimension and fact tables for the star schema.
+📊 P5: Cross-Platform Reporting with Power BI and Spark
 
-Loads customers into dim_customer, products into dim_product, and sales records into fact_sales.
-
-Logs row counts so I can verify that all rows were loaded correctly.
-
-After running the ETL, I confirmed that:
-
-dim_customer contains the expected number of customer rows.
-
-dim_product contains the expected number of product rows.
-
-fact_sales contains the expected number of sales transactions.
-
-This completed the move from prepared flat files into a true analytical data warehouse.
-
-P5 – Cross-Platform Reporting with Power BI and Spark
 Overview
+P5 focused on connecting the SQLite data warehouse from P4 to Power BI using an ODBC DSN. This step demonstrated how the star schema enables flexible analysis across tools such as Power BI, Spark, and potentially other BI platforms.
 
-P5 connects the SQLite data warehouse created in P4 to Power BI using an ODBC DSN, performs OLAP-style analysis, and prepares for future cross-platform reporting with tools like Spark.
-The goal is to show that the star schema in data/dw/smart_sales.db can support flexible, repeatable analysis outside of SQLite.
+The goal was to build visuals using DAX measures and confirm that the warehouse design supports common business-intelligence workflows without additional restructuring.
 
 Task 1 – Install and Configure Power BI + SQLite ODBC
+I installed Power BI Desktop, configured the SQLite ODBC driver, and created a DSN (SmartSalesDSN) that points to data/dw/smart_sales.db.
+This allowed Power BI to read the warehouse just like any other relational data source.
 
-Steps completed:
-
-Installed Power BI Desktop.
-
-Installed the SQLite ODBC driver.
-
-Created an ODBC DSN named SmartSalesDSN.
-
-Linked the DSN to the SQLite data warehouse file data/dw/smart_sales.db.
-
-This allowed Power BI to treat the SQLite data warehouse as a standard relational data source.
-
-Task 2 – Load Data Warehouse Tables into Power BI
-
-Steps completed:
-
-In Power BI, used Home → Get Data → ODBC and selected SmartSalesDSN.
-
-Loaded the tables dim_customer, dim_product, and fact_sales.
-
-Opened Model view and verified the relationships:
-
-dim_customer.CustomerID → fact_sales.CustomerID
-
-dim_product.ProductID → fact_sales.ProductID
+Task 2 – Load Warehouse Tables into Power BI
+After selecting the ODBC DSN, I loaded dim_customer, dim_product, and fact_sales into Power BI.
+In Model view, I confirmed the expected relationships:
+• dim_customer.CustomerID → fact_sales.CustomerID
+• dim_product.ProductID → fact_sales.ProductID
 
 This recreated the star schema visually inside Power BI.
 
-Task 3 – Measures and Visuals for Analysis
+Task 3 – Measures and Visuals
+I created several DAX measures to support analysis, including:
+• Total Sales Amount
+• Total Quantity Sold
+• Average Order Value
 
-To support OLAP-style analysis, I defined DAX measures and used them in visuals.
+Using these measures, I built examples such as:
+• A bar chart showing total sales by product category
+• A table highlighting the top customers by spending
+• Slicers to filter data by date, product category, or customer attributes
 
-Examples of measures:
-
-Total Sales Amount – sums the extended sales amount across all rows in fact_sales.
-
-Total Quantity Sold – sums the units sold.
-
-Average Order Value – divides total sales amount by the number of distinct orders or customers (depending on the definition used).
-
-How they were used:
-
-A bar chart showing Total Sales Amount by product category.
-
-A table showing the Top 10 Customers by Total Sales.
-
-Slicers for date, product category, and (if available) customer segment.
-
-These visuals demonstrate that the data warehouse can answer common business questions quickly.
+These visuals confirmed that the warehouse structure supports fast, meaningful OLAP queries.
 
 Task 4 – Example Insights
-
 From the Power BI report, I observed that:
+• A few product categories generate most of the revenue
+• A small group of customers accounts for a large share of sales
+• Slicers make comparisons across time periods or categories straightforward
 
-A few product categories contribute a large portion of total revenue.
+These insights highlight the value of having a clean dimensional model.
 
-A relatively small set of customers drives a significant share of total sales.
-
-Slicers make it easy to compare different time periods or filter to specific categories or customer groups.
-
-These are classic OLAP-style insights that depend on having a clean star schema and a well-designed BI model.
-
-Future Cross-Platform Use (Spark and Others)
-
-Because the data warehouse is stored in a standard SQLite file and follows a star schema, it can be reused by many tools:
-
-Spark DataFrames by connecting to the database or importing exported tables.
-
-Other BI tools such as Tableau or Excel.
-
-Python or R notebooks for more advanced analytics or machine learning.
-
-The key idea is that P4 built the warehouse, and P5 demonstrates how that warehouse supports tool-agnostic reporting across platforms.
+Cross-Platform Use (Spark and Others)
+Because the warehouse uses a SQLite file and a star schema, it can be easily reused in Spark, Tableau, Excel, Jupyter notebooks, or other tools. P4 provided the warehouse foundation, and P5 demonstrated its flexibility in a professional BI environment.
 
 Reflection
+This phase helped me connect a real data warehouse to Power BI and build visually driven analysis with DAX measures. I gained experience validating schema relationships, defining metrics, and using visuals to answer typical BI questions. The star schema design also demonstrated how one well-structured warehouse can support multiple reporting platforms without rebuilding the pipeline.
 
-This phase helped me connect a real data warehouse to a professional BI tool.
 
-I practiced setting up ODBC connections and validating relationships between fact and dimension tables.
-
-I gained experience defining measures and building visuals that answer real BI questions.
-
-I saw how a well-designed star schema makes it easy to reuse the same data across multiple tools (SQLite, Power BI, and potentially Spark) without rebuilding the pipeline from scratch.
-
-Step 2 – Save, commit, push
-
-After you paste the new section:
-
-Save the file in VS Code.
-
-In the terminal (at the project root), run:
-
-git add README.md
-
-git commit -m "Rewrite P4 and P5 section without markdown code fences"
-
-git push
-
-Then refresh the README on GitHub – everything from P4 down should render as normal headings, paragraphs, and bullet lists, with no giant grey code box.
-
-Why this suddenly became a problem
-
-You asked a fair question: why did everything work fine earlier?
-
-Earlier sections (P1–P3) had balanced fences and we weren’t trying to surgically edit inside them.
-
-The moment we mixed a partial code block (```text) and then nested more fences inside P5, one missing closing fence caused GitHub to treat everything below as “still inside the code block.”
-
-The chat UI always turns ``` into a grey box, which makes “before” and “after” look identical when I’m trying to show fixes.
