@@ -297,8 +297,12 @@ I created several DAX measures to support analysis, including:
 
 Using these measures, I built examples such as:
 • A bar chart showing total sales by product category
+/images/Slicing.png
+
 • A table highlighting the top customers by spending
+/images/Dicing.png
 • Slicers to filter data by date, product category, or customer attributes
+/images/Drilldown.png
 
 These visuals confirmed that the warehouse structure supports fast, meaningful OLAP queries.
 
