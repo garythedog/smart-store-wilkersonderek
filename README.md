@@ -319,7 +319,7 @@ This phase helped me connect a real data warehouse to Power BI and build visuall
 
 # P6: BI Insights and Storytelling – Engage (With One Outcome)
 
-This section documents the work completed for **P6: BI Insights and Storytelling**, where the focus shifts from technical data preparation and warehousing to **communicating insights** in a clear, compelling, and decision‑oriented format. The goal is to demonstrate the ability to analyze prepared data, design meaningful visualizations, and connect insights to a tangible business outcome.
+This section documents the work completed for **P6: BI Insights and Storytelling**, where the focus shifts from technical data preparation and warehousing to **communicating insights** in a clear, compelling, and decision-oriented format. The goal is to demonstrate the ability to analyze prepared data, design meaningful visualizations, and connect insights to a tangible business outcome.
 
 ---
 
@@ -327,10 +327,10 @@ This section documents the work completed for **P6: BI Insights and Storytelling
 
 The purpose of this module is to practice the essential skill of turning data into *actionable business intelligence*. A dashboard or visualization is only useful if it drives understanding and leads to action. This project focuses on:
 
-* Interpreting trends and patterns in the Smart Store dataset
-* Designing BI visuals that answer real business questions
-* Applying best practices in storytelling, clarity, and simplicity
-* Connecting every insight to **one specific business outcome**
+- Interpreting trends and patterns in the Smart Store dataset
+- Designing BI visuals that answer real business questions
+- Applying best practices in storytelling, clarity, and simplicity
+- Connecting every insight to **one specific business outcome**
 
 ---
 
@@ -338,43 +338,64 @@ The purpose of this module is to practice the essential skill of turning data in
 
 For this phase, the following tools were used:
 
-* **Power BI** – For designing dashboards and visual stories.
-* **SQLite Data Warehouse** – As the trusted data source generated in earlier modules.
-* **Python (optional)** – Used for any supplemental analysis if needed.
+- **Power BI** – For designing dashboards and visual stories
+- **SQLite Data Warehouse** – As the trusted data source generated in earlier modules
+- **Python (optional)** – Used for any supplemental analysis if needed
 
 ---
 
 ## 🧠 Selected Business Outcome
 
-**Outcome:** *Increase total store revenue by identifying top‑performing product categories and recommending inventory adjustments to maximize profitability.*
+**Outcome:** *Increase total store revenue by identifying top-performing product categories and recommending inventory adjustments to maximize profitability.*
 
-This outcome was chosen because the Smart Store dataset clearly lends itself to uncovering sales distribution patterns, category performance, and opportunities to shift inventory toward high‑value segments.
+This outcome was chosen because the Smart Store dataset clearly lends itself to uncovering sales distribution patterns, category performance, and opportunities to shift inventory toward high-value segments.
 
 ---
 
 ## 📊 Key Insights Developed
 
-This deliverable included BI visuals and insights such as:
+The following OLAP visuals were created to support the selected business outcome.
 
-### **1. Sales by Product Category**
+### 1. Sales by Product Category
 
-* Identified which categories produced the highest total revenue
-* Highlighted underperforming categories that may require promotional support or replacement
+To understand which categories drive the most revenue, a category-level analysis was performed.
 
-### **2. Store‑Level Revenue Comparison**
+**Visuals:**
 
-* Compared revenue across stores to understand geographic and operational differences
-* Revealed outliers that are driving overall performance
+![Revenue by Category](figures/olap/revenue_by_category.png)
 
-### **3. Monthly Sales Trend**
+![Revenue Category Share](figures/olap/revenue_category_share.png)
 
-* Illustrated seasonality patterns and monthly shifts
-* Helps forecast demand and stock planning
+**Insight:**
+These visuals show which product categories contribute the highest share of total revenue and which underperform. This helps prioritize which categories should receive more shelf space, inventory, or promotion.
 
-### **4. Customer Segmentation Insight**
+---
 
-* Analyzed customers based on TotalSpend or segment (if included)
-* Revealed which customer groups purchase which categories most often
+### 2. Revenue by Region and Category
+
+Next, revenue was analyzed by **region and category** to see whether performance patterns were consistent across locations.
+
+**Visuals:**
+
+![Revenue by Region and Category (Stacked)](figures/olap/revenue_category_region_stacked.png)
+
+![Repeat Revenue by Region and Category](figures/olap/repeat_revenue_region_category.png)
+
+**Insight:**
+The stacked chart highlights how each category performs in different regions, while the repeat-revenue view shows where loyal customers are concentrated. Together, they reveal where to focus regional marketing and inventory strategies.
+
+---
+
+### 3. Monthly Repeat Trend – North Region
+
+To understand customer loyalty and repeat purchasing behavior over time, repeat revenue was examined by month in one region.
+
+**Visual:**
+
+![Monthly Repeat Trend – North](figures/olap/monthly_repeat_trend_North.png)
+
+**Insight:**
+This trend line shows whether repeat revenue in the North region is increasing, flat, or declining. It supports decisions around retention campaigns, loyalty programs, and targeted promotions.
 
 ---
 
@@ -387,7 +408,7 @@ To maintain clarity and flow, the narrative followed this structure:
 3. **Implication (Meaning):** Why does it matter?
 4. **Action (Outcome):** What should the business do next?
 
-This structure ensures that visuals are not just charts but *drivers of decision‑making*.
+This structure ensures that visuals are not just charts but *drivers of decision-making*.
 
 ---
 
@@ -395,19 +416,14 @@ This structure ensures that visuals are not just charts but *drivers of decision
 
 The final P6 submission included:
 
-* A Power BI report containing:
-
-  * 3–5 visuals supporting one clear business outcome
-  * Clean layout with deliberate use of color, whitespace, and labels
-  * Consistent formatting following BI design guidelines
-* A written or narrated insight summary explaining the recommended action
+- A Power BI report containing:
+  - 3–5 visuals supporting one clear business outcome
+  - Clean layout with deliberate use of color, whitespace, and labels
+  - Consistent formatting following BI design guidelines
+- A written or narrated insight summary explaining the recommended action and how each OLAP visual supports the decision
 
 ---
 
 ## ✅ Summary
 
-P6 demonstrates the transition from *data engineering* to *data communication*. The insights developed tie directly to a single business outcome: improving revenue through category optimization. This project completes the BI pipeline and showcases the full analytics lifecycle—from raw data all the way to actionable business intelligence.
-
----
-
-If future phases build on this, additional enhancements may include interactive dashboards, forecasts, or integration of advanced analytics models.
+P6 demonstrates the transition from *data engineering* to *data communication*. The OLAP visuals above tie directly to a single business outcome: improving revenue through category and regional optimization. This project completes the BI pipeline and showcases the full analytics lifecycle—from raw data all the way to actionable business intelligence.
