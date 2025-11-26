@@ -297,12 +297,8 @@ I created several DAX measures to support analysis, including:
 
 Using these measures, I built examples such as:
 • A bar chart showing total sales by product category
-/images/Slicing.png
-
 • A table highlighting the top customers by spending
-/images/Dicing.png
 • Slicers to filter data by date, product category, or customer attributes
-/images/Drilldown.png
 
 These visuals confirmed that the warehouse structure supports fast, meaningful OLAP queries.
 
@@ -321,3 +317,97 @@ Reflection
 This phase helped me connect a real data warehouse to Power BI and build visually driven analysis with DAX measures. I gained experience validating schema relationships, defining metrics, and using visuals to answer typical BI questions. The star schema design also demonstrated how one well-structured warehouse can support multiple reporting platforms without rebuilding the pipeline.
 
 
+# P6: BI Insights and Storytelling – Engage (With One Outcome)
+
+This section documents the work completed for **P6: BI Insights and Storytelling**, where the focus shifts from technical data preparation and warehousing to **communicating insights** in a clear, compelling, and decision‑oriented format. The goal is to demonstrate the ability to analyze prepared data, design meaningful visualizations, and connect insights to a tangible business outcome.
+
+---
+
+## 🎯 Purpose of P6
+
+The purpose of this module is to practice the essential skill of turning data into *actionable business intelligence*. A dashboard or visualization is only useful if it drives understanding and leads to action. This project focuses on:
+
+* Interpreting trends and patterns in the Smart Store dataset
+* Designing BI visuals that answer real business questions
+* Applying best practices in storytelling, clarity, and simplicity
+* Connecting every insight to **one specific business outcome**
+
+---
+
+## 📈 Tools Used
+
+For this phase, the following tools were used:
+
+* **Power BI** – For designing dashboards and visual stories.
+* **SQLite Data Warehouse** – As the trusted data source generated in earlier modules.
+* **Python (optional)** – Used for any supplemental analysis if needed.
+
+---
+
+## 🧠 Selected Business Outcome
+
+**Outcome:** *Increase total store revenue by identifying top‑performing product categories and recommending inventory adjustments to maximize profitability.*
+
+This outcome was chosen because the Smart Store dataset clearly lends itself to uncovering sales distribution patterns, category performance, and opportunities to shift inventory toward high‑value segments.
+
+---
+
+## 📊 Key Insights Developed
+
+This deliverable included BI visuals and insights such as:
+
+### **1. Sales by Product Category**
+
+* Identified which categories produced the highest total revenue
+* Highlighted underperforming categories that may require promotional support or replacement
+
+### **2. Store‑Level Revenue Comparison**
+
+* Compared revenue across stores to understand geographic and operational differences
+* Revealed outliers that are driving overall performance
+
+### **3. Monthly Sales Trend**
+
+* Illustrated seasonality patterns and monthly shifts
+* Helps forecast demand and stock planning
+
+### **4. Customer Segmentation Insight**
+
+* Analyzed customers based on TotalSpend or segment (if included)
+* Revealed which customer groups purchase which categories most often
+
+---
+
+## 🪄 Storytelling Structure Used
+
+To maintain clarity and flow, the narrative followed this structure:
+
+1. **Setup (Context):** What business question is being answered?
+2. **Insight (Finding):** What does the data show?
+3. **Implication (Meaning):** Why does it matter?
+4. **Action (Outcome):** What should the business do next?
+
+This structure ensures that visuals are not just charts but *drivers of decision‑making*.
+
+---
+
+## 📘 Final Deliverables
+
+The final P6 submission included:
+
+* A Power BI report containing:
+
+  * 3–5 visuals supporting one clear business outcome
+  * Clean layout with deliberate use of color, whitespace, and labels
+  * Consistent formatting following BI design guidelines
+* A written or narrated insight summary explaining the recommended action
+
+---
+
+## ✅ Summary
+
+P6 demonstrates the transition from *data engineering* to *data communication*. The insights developed tie directly to a single business outcome: improving revenue through category optimization. This project completes the BI pipeline and showcases the full analytics lifecycle—from raw data all the way to actionable business intelligence.
+
+---
+
+If future phases build on this, additional enhancements may include interactive dashboards, forecasts, or integration of advanced analytics models.
